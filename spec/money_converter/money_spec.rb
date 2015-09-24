@@ -64,6 +64,39 @@ describe MoneyConverter::Money do
 
   end
 
+  describe "#-" do
+
+    context "with subtrahends of the same currency" do
+
+      let(:currency) { 'EUR' }
+
+      let(:first_summand) { described_class.new(35, currency) }
+      let(:second_summand) { described_class.new(15, currency) }
+
+      subject { first_summand - second_summand }
+
+      its(:amount) { is_expected.to eq 20 }
+      its(:currency) { is_expected.to eq currency }
+
+    end
+
+    context "with subtrahends of different currencies" do
+
+      let(:euro) { 'EUR' }
+      let(:krone) { 'DKK' }
+
+      let(:first_summand) { described_class.new(15, euro) }
+      let(:second_summand) { described_class.new(35, krone) }
+
+      subject { first_summand - second_summand }
+
+      its(:amount) { is_expected.to be_within(0.01).of(10.30) }
+      its(:currency) { is_expected.to eq euro }
+
+    end
+
+  end
+
   describe "#*" do
 
     let(:money) { described_class.new(10, 'EUR') }
