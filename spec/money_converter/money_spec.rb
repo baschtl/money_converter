@@ -4,13 +4,15 @@ describe MoneyConverter::Money do
     {
       'EUR' => {
         'DKK' => 7.46076,
-        'USD' => 1.11885,
-        'BITCOIN' => 0.0047
+        'USD' => 1.11885
       },
       'DKK' => {
         'EUR' => 0.134033,
-        'USD' => 0.149708,
-        'BITCOIN' => 0.000649578
+        'USD' => 0.149708
+      },
+      'USD' => {
+        'DKK' => 6.61330,
+        'EUR' => 0.886485
       }
     }
   end
@@ -19,6 +21,16 @@ describe MoneyConverter::Money do
     MoneyConverter.configure do |config|
       config.conversion_rates conversion_rates
     end
+  end
+
+  describe "initializing Money" do
+
+    it "does not allow instances of unknown currency" do
+      expect {
+        described_class.new(10, 'ABC')
+      }.to raise_error MoneyConverter::UnknownCurrencyError
+    end
+
   end
 
   describe "#inspect" do

@@ -8,4 +8,12 @@ module MoneyConverter
 
   end
 
+  class UnknownCurrencyError < StandardError
+
+    def initialize(currency)
+      super("The currency '#{currency}' was not configured.")
+    end
+
+  end
+
 end

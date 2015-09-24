@@ -6,6 +6,8 @@ module MoneyConverter
     attr_accessor :amount, :currency
 
     def initialize(amount, currency)
+      validate_currency!(currency)
+
       @amount = amount
       @currency = currency
     end
@@ -51,6 +53,12 @@ module MoneyConverter
     end
 
     private
+
+    def validate_currency!(currency)
+      unless MoneyConverter.config.conversion_rates.has_key?(currency)
+        fail UnknownCurrencyError.new(currency)
+      end
+    end
 
     def calculate_new_money_with(value, operation)
       Money.new(amount.send(operation, value), currency)
