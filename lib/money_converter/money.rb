@@ -10,12 +10,12 @@ module MoneyConverter
     end
 
     def inspect
-      "#{'%.2f' % amount} #{currency}"
+      "#{format('%.2f', amount)} #{currency}"
     end
 
     def convert_to(currency)
       if currency == self.currency
-        self.dup
+        dup
       else
         Money.new(converted_amount_for(currency), currency)
       end
@@ -25,7 +25,7 @@ module MoneyConverter
 
     def converted_amount_for(currency)
       rate = MoneyConverter.config.conversion_rates[self.currency][currency]
-      (self.amount * rate).round(2)
+      (amount * rate).round(2)
     end
 
   end
