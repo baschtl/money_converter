@@ -15,7 +15,7 @@ module MoneyConverter
     end
 
     def <=>(other)
-      converted_other = currency == other.currency ? other : other.convert_to(currency)
+      converted_other = converted_other(other)
 
       if amount == converted_other.amount
         0
@@ -27,15 +27,11 @@ module MoneyConverter
     end
 
     def +(other)
-      converted_other = currency == other.currency ? other : other.convert_to(currency)
-
-      Money.new(amount + converted_other.amount, currency)
+      Money.new(amount + converted_other(other).amount, currency)
     end
 
     def -(other)
-      converted_other = currency == other.currency ? other : other.convert_to(currency)
-
-      Money.new(amount - converted_other.amount, currency)
+      Money.new(amount - converted_other(other).amount, currency)
     end
 
     def *(multiplier)
@@ -55,6 +51,14 @@ module MoneyConverter
     end
 
     private
+
+    def converted_other(other)
+      if currency == other.currency
+        other
+      else
+        other.convert_to(currency)
+      end
+    end
 
     def convert_amount_for(currency)
       if rate = MoneyConverter.config.conversion_rates[self.currency][currency]
