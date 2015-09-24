@@ -33,14 +33,14 @@ describe MoneyConverter::Money do
 
   describe "#+" do
 
+    subject { first_summand + second_summand }
+
     context "with summands of the same currency" do
 
       let(:currency) { 'EUR' }
 
       let(:first_summand) { described_class.new(15, currency) }
       let(:second_summand) { described_class.new(35, currency) }
-
-      subject { first_summand + second_summand }
 
       its(:amount) { is_expected.to eq 50 }
       its(:currency) { is_expected.to eq currency }
@@ -55,8 +55,6 @@ describe MoneyConverter::Money do
       let(:first_summand) { described_class.new(15, euro) }
       let(:second_summand) { described_class.new(35, krone) }
 
-      subject { first_summand + second_summand }
-
       its(:amount) { is_expected.to be_within(0.01).of(19.69) }
       its(:currency) { is_expected.to eq euro }
 
@@ -66,14 +64,14 @@ describe MoneyConverter::Money do
 
   describe "#-" do
 
+    subject { first_summand - second_summand }
+
     context "with subtrahends of the same currency" do
 
       let(:currency) { 'EUR' }
 
       let(:first_summand) { described_class.new(35, currency) }
       let(:second_summand) { described_class.new(15, currency) }
-
-      subject { first_summand - second_summand }
 
       its(:amount) { is_expected.to eq 20 }
       its(:currency) { is_expected.to eq currency }
@@ -87,8 +85,6 @@ describe MoneyConverter::Money do
 
       let(:first_summand) { described_class.new(15, euro) }
       let(:second_summand) { described_class.new(35, krone) }
-
-      subject { first_summand - second_summand }
 
       its(:amount) { is_expected.to be_within(0.01).of(10.30) }
       its(:currency) { is_expected.to eq euro }
