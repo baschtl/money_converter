@@ -18,6 +18,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require "rspec/its"
+require "pry"
 
 require "money_converter"
 
