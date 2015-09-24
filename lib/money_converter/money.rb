@@ -34,13 +34,13 @@ module MoneyConverter
       if currency == self.currency
         dup
       else
-        Money.new(converted_amount_for(currency), currency)
+        Money.new(convert_amount_for(currency), currency)
       end
     end
 
     private
 
-    def converted_amount_for(currency)
+    def convert_amount_for(currency)
       if rate = MoneyConverter.config.conversion_rates[self.currency][currency]
         (amount * rate).round(2)
       else
