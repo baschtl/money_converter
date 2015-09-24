@@ -27,19 +27,19 @@ module MoneyConverter
     end
 
     def +(other)
-      Money.new(amount + converted_other(other).amount, currency)
+      calculate_new_money_with(converted_other(other).amount, '+')
     end
 
     def -(other)
-      Money.new(amount - converted_other(other).amount, currency)
+      calculate_new_money_with(converted_other(other).amount, '-')
     end
 
     def *(multiplier)
-      Money.new(amount * multiplier, currency)
+      calculate_new_money_with(multiplier, '*')
     end
 
     def /(divisor)
-      Money.new(amount / divisor, currency)
+      calculate_new_money_with(divisor, '/')
     end
 
     def convert_to(currency)
@@ -51,6 +51,10 @@ module MoneyConverter
     end
 
     private
+
+    def calculate_new_money_with(value, operation)
+      Money.new(amount.send(operation, value), currency)
+    end
 
     def converted_other(other)
       if currency == other.currency
