@@ -13,6 +13,15 @@ module MoneyConverter
       "#{format('%.2f', amount)} #{currency}"
     end
 
+    def +(other)
+      if currency == other.currency
+        Money.new(amount + other.amount, currency)
+      else
+        converted_other = other.convert_to(currency)
+        Money.new(amount + converted_other.amount, currency)
+      end
+    end
+
     def *(multiplier)
       Money.new(amount * multiplier, currency)
     end
