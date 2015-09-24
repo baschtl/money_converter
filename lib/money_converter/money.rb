@@ -17,10 +17,15 @@ module MoneyConverter
       if currency == self.currency
         self.dup
       else
-        rate = MoneyConverter.config.conversion_rates[self.currency][currency]
-        new_amount = (self.amount * rate).round(2)
-        Money.new(new_amount, currency)
+        Money.new(converted_amount_for(currency), currency)
       end
+    end
+
+    private
+
+    def converted_amount_for(currency)
+      rate = MoneyConverter.config.conversion_rates[self.currency][currency]
+      (self.amount * rate).round(2)
     end
 
   end
