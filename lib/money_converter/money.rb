@@ -13,6 +13,10 @@ module MoneyConverter
       "#{format('%.2f', amount)} #{currency}"
     end
 
+    def *(multiplier)
+      Money.new(amount * multiplier, currency)
+    end
+
     def /(divisor)
       Money.new(amount / divisor, currency)
     end

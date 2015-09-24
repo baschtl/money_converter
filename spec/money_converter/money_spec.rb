@@ -31,6 +31,18 @@ describe MoneyConverter::Money do
 
   end
 
+  describe "#*" do
+
+    let(:money) { described_class.new(10, 'EUR') }
+    let(:multiplier) { 5 }
+
+    subject { money * multiplier }
+
+    its(:amount) { is_expected.to eq 50 }
+    its(:currency) { is_expected.to eq 'EUR' }
+
+  end
+
   describe "#/" do
 
     let(:money) { described_class.new(50, 'EUR') }
