@@ -13,6 +13,10 @@ module MoneyConverter
       "#{format('%.2f', amount)} #{currency}"
     end
 
+    def /(divisor)
+      Money.new(amount / divisor, currency)
+    end
+
     def convert_to(currency)
       if currency == self.currency
         dup

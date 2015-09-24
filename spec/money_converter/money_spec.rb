@@ -31,15 +31,25 @@ describe MoneyConverter::Money do
 
   end
 
+  describe "#/" do
+
+    let(:money) { described_class.new(50, 'EUR') }
+    let(:divisor) { 5 }
+
+    subject { money / divisor }
+
+    its(:amount) { is_expected.to eq 10 }
+    its(:currency) { is_expected.to eq 'EUR' }
+
+  end
+
   describe "#convert_to" do
 
     let(:initial_amount) { 50 }
     let(:initial_currency) { 'EUR' }
     let(:money) { described_class.new(initial_amount, initial_currency) }
 
-    subject do
-      money.convert_to(currency_to_convert_to)
-    end
+    subject { money.convert_to(currency_to_convert_to) }
 
     context "with same currency to convert to" do
 
