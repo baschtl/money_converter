@@ -24,8 +24,11 @@ module MoneyConverter
     private
 
     def converted_amount_for(currency)
-      rate = MoneyConverter.config.conversion_rates[self.currency][currency]
-      (amount * rate).round(2)
+      if rate = MoneyConverter.config.conversion_rates[self.currency][currency]
+        (amount * rate).round(2)
+      else
+        fail CurrencyConversionError.new(self.currency, currency)
+      end
     end
 
   end

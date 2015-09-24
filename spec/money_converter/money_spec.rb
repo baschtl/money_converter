@@ -64,6 +64,18 @@ describe MoneyConverter::Money do
 
     end
 
+    context "with an unknown currency to convert to" do
+
+      let(:currency_to_convert_to) { 'GBP' }
+
+      it "raises a MoneyConverter::CurrencyConversionError" do
+        expect {
+          subject
+        }.to raise_error MoneyConverter::CurrencyConversionError
+      end
+
+    end
+
   end
 
 end
