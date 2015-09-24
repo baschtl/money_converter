@@ -31,6 +31,74 @@ describe MoneyConverter::Money do
 
   end
 
+  describe "#<=>" do
+
+    let(:money) { described_class.new(10, 'EUR') }
+
+    subject { money <=> other_money }
+
+    context "with an equal other" do
+
+      context "with the same currency" do
+
+        let(:other_money) { described_class.new(10, 'EUR') }
+
+        it { is_expected.to eq 0 }
+
+      end
+
+      context "with a different currency" do
+
+        let(:other_money) { described_class.new(74.61, 'DKK') }
+
+        it { is_expected.to eq 0 }
+
+      end
+
+    end
+
+    context "with an greater other" do
+
+      context "with the same currency" do
+
+        let(:other_money) { described_class.new(15, 'EUR') }
+
+        it { is_expected.to eq -1 }
+
+      end
+
+      context "with a different currency" do
+
+        let(:other_money) { described_class.new(100, 'DKK') }
+
+        it { is_expected.to eq -1 }
+
+      end
+
+    end
+
+    context "with an smaller other" do
+
+      context "with the same currency" do
+
+        let(:other_money) { described_class.new(5, 'EUR') }
+
+        it { is_expected.to eq 1 }
+
+      end
+
+      context "with a different currency" do
+
+        let(:other_money) { described_class.new(20, 'DKK') }
+
+        it { is_expected.to eq 1 }
+
+      end
+
+    end
+
+  end
+
   describe "#+" do
 
     subject { first_summand + second_summand }

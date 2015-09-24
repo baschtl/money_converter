@@ -1,6 +1,7 @@
 module MoneyConverter
 
   class Money
+    include Comparable
 
     attr_accessor :amount, :currency
 
@@ -11,6 +12,18 @@ module MoneyConverter
 
     def inspect
       "#{format('%.2f', amount)} #{currency}"
+    end
+
+    def <=>(other)
+      converted_other = currency == other.currency ? other : other.convert_to(currency)
+
+      if amount == converted_other.amount
+        0
+      elsif amount < converted_other.amount
+        -1
+      else
+        1
+      end
     end
 
     def +(other)
@@ -56,7 +69,6 @@ module MoneyConverter
         fail CurrencyConversionError.new(self.currency, currency)
       end
     end
-
   end
 
 end
