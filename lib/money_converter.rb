@@ -1,3 +1,4 @@
+require "money_converter/money"
 require "money_converter/version"
 
 module MoneyConverter
