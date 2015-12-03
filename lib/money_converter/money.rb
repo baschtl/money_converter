@@ -19,13 +19,7 @@ module MoneyConverter
     def <=>(other)
       converted_other = converted_other(other)
 
-      if amount == converted_other.amount
-        0
-      elsif amount < converted_other.amount
-        -1
-      else
-        1
-      end
+      amount <=> converted_other.amount
     end
 
     def +(other)
